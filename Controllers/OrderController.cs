@@ -3,6 +3,7 @@ using BookStore.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Security.Claims;
 
 namespace BookStore.Controllers
 {
@@ -52,7 +53,8 @@ namespace BookStore.Controllers
         public void CreateOrder(Order order)
         {
             order.OrderPlaced = DateTime.Now;
-
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            order.CustomerId = userId;
             var cartItems = _cart.CartItems;
 
             foreach (var item in cartItems)
