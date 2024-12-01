@@ -1,7 +1,9 @@
 ﻿using BookStore.Data;
+using BookStore.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -21,6 +23,7 @@ namespace BookStore.Controllers
         {
             var books = _context.Books.Select(b => b);
 
+
             if (!string.IsNullOrEmpty(searchString))
             {
                 books = books.Where(b => b.Title.Contains(searchString) || b.Author.Contains(searchString));
@@ -38,6 +41,10 @@ namespace BookStore.Controllers
                 books = books.Where(b => b.Price <= max);
             }
 
+            //foreach (var book in books)
+            //{
+            //    book.Reviews = await _context.Review.Where(r => r.BookId == book.Id).ToListAsync();
+            //}
             return View(await books.ToListAsync());
         }
 
@@ -54,8 +61,35 @@ namespace BookStore.Controllers
             {
                 return NotFound();
             }
+            book.Reviews = await _context.Review.Where(r => r.BookId == book.Id).ToListAsync();
+            if (book.Reviews.Count!=0)
+            {
 
+                book.OverallScore = calAvgPoint(book);
+                try
+                {
+                    _context.Update(book);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    throw;
+                }
+            }
+            
             return View(book);
+        }
+        public float calAvgPoint(Book book)
+        {
+            float total = 0;
+            var count = 0;
+            foreach (var Review in book.Reviews)
+            {
+                count++;
+                total += Review.Rating;
+            }
+            
+            return (float)Math.Round(total / count,1);
         }
     }
 }

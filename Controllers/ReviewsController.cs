@@ -7,40 +7,32 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BookStore.Data;
 using BookStore.Models;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
-using SQLitePCL;
-using Microsoft.CodeAnalysis.Operations;
 
 namespace BookStore.Controllers
 {
-    [Authorize(Roles = "Admin,Author")]
-    public class BooksController : Controller
+    
+    public class ReviewsController : Controller
     {
         private readonly BookStoreContext _context;
-        //private readonly Review _review;
+        private readonly UserManager<DefaultUser> _userManager;
 
-        public BooksController(BookStoreContext context)
+        public ReviewsController(BookStoreContext context,UserManager<DefaultUser> userManager)
         {
             _context = context;
-            //_review = review;
+            _userManager = userManager;
         }
 
-        [AllowAnonymous]
-        // GET: Books
+        // GET: Reviews
         public async Task<IActionResult> Index()
         {
-            var books = await _context.Books.ToListAsync();
-            
-            foreach (var book in books)
-            {   
-                book.Reviews = await _context.Review.Where(r => r.BookId == book.Id).ToListAsync();
-                book.OverallScore = calAvgPoint(book);
-
-            }
-            return View(books);
+            var bookStoreContext = _context.Review.Include(r => r.book);
+            return View(await bookStoreContext.ToListAsync());
         }
 
-        // GET: Books/Details/5
+        // GET: Reviews/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -48,53 +40,50 @@ namespace BookStore.Controllers
                 return NotFound();
             }
 
-            var book = await _context.Books
+            var review = await _context.Review
+                .Include(r => r.book)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (book == null)
+            if (review == null)
             {
                 return NotFound();
             }
 
-            // Assign reviews to the book
-            book.Reviews = await _context.Review.Where(r => r.BookId == book.Id).ToListAsync();
-            if (book.Reviews.Count != 0) {
-                book.OverallScore = calAvgPoint(book);
-                try
-                {
-                    _context.Update(book);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    throw;
-                }
-            }
-            return View(book);
+            return View(review);
         }
 
-        // GET: Books/Create
+        // GET: Reviews/Create
         public IActionResult Create()
         {
+            ViewData["BookId"] = new SelectList(_context.Books, "Id", "Author");
             return View();
         }
 
-        // POST: Books/Create
+        // POST: Reviews/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,Language,ISBN,DatePublished,Price,Author,ImageUrl,Reviews,OverallScore")] Book book)
+        [Authorize]
+        public async Task<IActionResult> Create(int id, [Bind("Rating,Comments,BookId")] Review review)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(book);
+                review.ReviewDate = DateTime.Now;
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var user = await _userManager.FindByIdAsync(userId);
+                var userName = user?.FirstName + " " + user?.LastName;
+                review.BookId = id;
+                review.Reviewer = userName;
+                _context.Add(review);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Store", new { id = id});
             }
-            return View(book);
+            ViewData["BookId"] = new SelectList(_context.Books, "Id", "Author", id);
+            return RedirectToAction("Index", "Store");
         }
 
-        // GET: Books/Edit/5
+        // GET: Reviews/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -102,23 +91,25 @@ namespace BookStore.Controllers
                 return NotFound();
             }
 
-            var book = await _context.Books.FindAsync(id);
-            if (book == null)
+            var review = await _context.Review.FindAsync(id);
+            if (review == null)
             {
                 return NotFound();
             }
-            return View(book);
+            ViewData["BookId"] = new SelectList(_context.Books, "Id", "Author", review.BookId);
+            return View(review);
         }
 
-        // POST: Books/Edit/5
+        // POST: Reviews/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles ="Admin")]
+
         [ValidateAntiForgeryToken]
-        //[Authorize]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Language,ISBN,DatePublished,Price,Author,ImageUrl,Reviews,OverallScore")] Book book)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Reviewer,Rating,Comments,BookId,ReviewDate")] Review review)
         {
-            if (id != book.Id)
+            if (id != review.Id)
             {
                 return NotFound();
             }
@@ -127,12 +118,12 @@ namespace BookStore.Controllers
             {
                 try
                 {
-                    _context.Update(book);
+                    _context.Update(review);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!BookExists(book.Id))
+                    if (!ReviewExists(review.Id))
                     {
                         return NotFound();
                     }
@@ -143,10 +134,12 @@ namespace BookStore.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(book);
+            ViewData["BookId"] = new SelectList(_context.Books, "Id", "Author", review.BookId);
+            return View(review);
         }
 
-        // GET: Books/Delete/5
+        // GET: Reviews/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -154,41 +147,32 @@ namespace BookStore.Controllers
                 return NotFound();
             }
 
-            var book = await _context.Books
+            var review = await _context.Review
+                .Include(r => r.book)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (book == null)
+            if (review == null)
             {
                 return NotFound();
             }
 
-            return View(book);
+            return View(review);
         }
 
-        // POST: Books/Delete/5
+        // POST: Reviews/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var book = await _context.Books.FindAsync(id);
-            _context.Books.Remove(book);
+            var review = await _context.Review.FindAsync(id);
+            _context.Review.Remove(review);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool BookExists(int id)
+        private bool ReviewExists(int id)
         {
-            return _context.Books.Any(e => e.Id == id);
-        }
-
-        public float calAvgPoint(Book book) {
-            float total = 0;
-            var count = 0;
-            foreach (var Review in book.Reviews)
-            {
-                count++;
-                total += Review.Rating;
-            }
-            return (float)Math.Round(total / count, 1);
+            return _context.Review.Any(e => e.Id == id);
         }
     }
 }

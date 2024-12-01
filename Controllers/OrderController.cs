@@ -1,6 +1,7 @@
 ﻿using BookStore.Data;
 using BookStore.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Security.Claims;
@@ -12,11 +13,13 @@ namespace BookStore.Controllers
     {
         private readonly BookStoreContext _context;
         private readonly Cart _cart;
+        private readonly UserManager<DefaultUser> _userManager;
 
-        public OrderController(BookStoreContext context, Cart cart)
+        public OrderController(BookStoreContext context, Cart cart, UserManager<DefaultUser> userManager)
         {
             _context = context;
             _cart = cart;
+            _userManager = userManager;
         }
 
         public IActionResult Checkout()
@@ -54,6 +57,9 @@ namespace BookStore.Controllers
         {
             order.OrderPlaced = DateTime.Now;
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var user = _userManager.FindByIdAsync(userId).Result;
+            var userName = user?.FirstName + " " + user?.LastName;
             order.CustomerId = userId;
             var cartItems = _cart.CartItems;
 
