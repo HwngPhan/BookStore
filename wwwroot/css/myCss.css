@@ -30,7 +30,16 @@
     background-color: forestgreen;
     border: 1px solid forestgreen;
 }
-
+.breadcrumbs-area {
+    background: rgba(0, 0, 0, 0) url(https://mybk.hcmut.edu.vn/bookstore/img/header-bg.jpg) no-repeat scroll center center;
+    color: #fefefe;
+    text-align: center;
+    text-transform: capitalize;
+}
+.breadcrumbs {
+    line-height: 0;
+    padding: 140px 0;
+}
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
