@@ -36,10 +36,10 @@ namespace BookStore.Models
                     Email = email,
                     UserName = email,
                     FirstName = "Admin",
-                    LastName = "Adminsson",
-                    Address = "Adstreet 3",
-                    City = "Big City",
-                    ZipCode = "12345"
+                    LastName = "Administrator ",
+                    Address = "VN",
+                    City = "HCM",
+                    ZipCode = "10000"
                 };
 
                 IdentityResult result = userManager.CreateAsync(user, password).Result;

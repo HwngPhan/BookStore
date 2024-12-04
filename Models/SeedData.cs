@@ -82,6 +82,40 @@ namespace BookStore.Models
                         Price = 95,
                         Author = "Cormac McCarthy",
                         ImageUrl = "/images/the-road.jpg"
+                    },
+
+
+                    new Book
+                    {
+                        Title = "The Fellowship of the Ring",
+                        Language = "English",
+                        ISBN = "9780008376062",
+                        DatePublished = DateTime.Parse("1954-7-29"),
+                        Price = 207,
+                        Author = "J. R. R. Tolkien",
+                        ImageUrl = "https://salt.tikicdn.com/cache/750x750/ts/product/11/02/89/10da31c0f1cfc7a54edde3ad52efaea7.jpg.webp"
+                    },
+
+                    new Book
+                    {
+                        Title = "The Two Towers",
+                        Language = "English",
+                        ISBN = "9780008537784",
+                        DatePublished = DateTime.Parse("1954-11-11"),
+                        Price = 162,
+                        Author = "J. R. R. Tolkien",
+                        ImageUrl = "https://salt.tikicdn.com/cache/750x750/ts/product/ea/35/c6/2cc24ee2fa3ef0701919289525356c31.jpg.webp"
+                    },
+
+                    new Book
+                    {
+                        Title = "The Return of the King",
+                        Language = "English",
+                        ISBN = "9780008537746",
+                        DatePublished = DateTime.Parse("1955-10-20"),
+                        Price = 181,
+                        Author = "J. R. R. Tolkien",
+                        ImageUrl = "https://salt.tikicdn.com/cache/750x750/ts/product/75/d8/8b/91c6c3e0e1e053575b0d1d18da4792de.jpg.webp"
                     }
                 );
 
