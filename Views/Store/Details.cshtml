@@ -61,8 +61,74 @@
             <a asp-action="Index" class="btn btn-warning"><i class="fa-solid fa-arrow-left"></i> Back</a>
             <a asp-controller="Cart" asp-action="AddToCart" asp-route-id="@Model.Id" class="btn btn-primary store-btn float-right mr-5">Add to cart <i class="fa-solid fa-cart-plus"></i></a>
         </div>
+
+
+
     </div>
     <div class="col-4">
         <img src="@Model.ImageUrl" class="w-100" />
     </div>
+
+
 </div>
+
+
+    <h3>Reviews</h3>
+       
+    <dl>
+        <dt>
+            @Html.DisplayNameFor(model => model.OverallScore) : @Html.DisplayFor(model => model.OverallScore)
+        </dt>
+
+    </dl>
+
+    <div>
+        <a asp-action="Create" asp-controller="Reviews" asp-route-id="@Model.Id" class="btn btn-primary"><i class="fa-solid fa-comment"></i> Add Review</a>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Reviews.First().Reviewer)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Reviews.First().Rating)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Reviews.First().Comments)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Reviews.First().ReviewDate)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model.Reviews)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Reviewer)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Rating)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Comments)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ReviewDate)
+                    </td>
+                @if (User.IsInRole("Admin"))
+
+                {
+
+                    <td>
+                        <a asp-action="Edit" asp-controller="Reviews" asp-route-id="@item.Id" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <a asp-action="Delete" asp-controller="Reviews" asp-route-id="@item.Id" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
+                    </td>
+                }
+                </tr>
+            }
+        </tbody>
+    </table>

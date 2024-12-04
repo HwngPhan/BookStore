@@ -3,23 +3,63 @@
 @{
     ViewData["Title"] = "Store";
 }
+<style>
+    .breadcrumbs-area {
+        background: rgba(0, 0, 0, 0) url(https://mybk.hcmut.edu.vn/bookstore/img/header-bg.jpg) no-repeat scroll center center;
+        color: #fefefe;
+        text-align: center;
+        text-transform: capitalize;
+    }
 
+    .breadcrumbs {
+        line-height: 0;
+        padding: 140px 0;
+    }
+
+    .layer-4 {
+        margin-top: 77px;
+    }
+
+    .layer-4 .title-4 input {
+              border: medium none;
+              border-bottom-left-radius: 30px;
+              border-top-left-radius: 30px;
+              color: #444444;
+              height: 50px;
+              line-height: 50px;
+              padding-left: 20px;
+              position: relative;
+              width: 40%;
+          }
+</style>
 <h2 class="my-4">Store</h2>
 
-
-<form asp-action="Index" class="col-2 my-1 p-2">
-    <div>
-        Filter search
-        <div class="my-1">
-            <input type="text" name="searchString" placeholder="Title or Author" class="form-control-sm col-12" />
+<div class="breadcrumbs-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="breadcrumbs">
+                    <div class="layer-4">
+                        <form asp-action="Index" class="col-5 my-1 p-2 mx-auto">
+                            <div>
+                                
+                                <div class="my-1">
+                                    <input type="text" name="searchString" placeholder="Title or Author" class="form-control-sm col-12" />
+                                </div>
+                                <div class="my-1">
+                                    <input type="number" name="minPrice" step="1" placeholder="$min" class="form-control-sm col-5" />&nbsp;&#8212;&nbsp;<input type="number" name="maxPrice" step="1" placeholder="$max" class="form-control-sm col-5" />
+                                </div>
+                                <input type="submit" value="Filter" class="btn btn-primary btn-sm" />
+                                <a asp-action="Index" class="btn btn-secondary btn-sm">Clear</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="my-1">
-            <input type="number" name="minPrice" step="1" placeholder="$min" class="form-control-sm col-5" />&nbsp;&#8212;&nbsp;<input type="number" name="maxPrice" step="1" placeholder="$max" class="form-control-sm col-5" />
-        </div>
-        <input type="submit" value="Filter" class="btn btn-primary btn-sm" />
-        <a asp-action="Index" class="btn btn-secondary btn-sm float-right">Clear</a>
     </div>
-</form>
+</div>
+
 
 
 <div class="row">

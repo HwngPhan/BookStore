@@ -19,5 +19,6 @@ namespace BookStore.Data
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<BookStore.Models.Review> Review { get; set; }
     }
 }

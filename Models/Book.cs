@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace BookStore.Models
@@ -32,5 +34,9 @@ namespace BookStore.Models
 
         [Display(Name = "Image URL")]
         public string ImageUrl { get; set; }
+
+        public List<Review> Reviews { get; set; }
+
+        public float OverallScore { get; set; }
     }
 }
