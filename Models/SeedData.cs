@@ -89,7 +89,7 @@ namespace BookStore.Models
                         Title = "Harry Potter and the Sorcerer's Stone",
                         Language = "English",
                         ISBN = "9781338878929",
-                        DatePublished = DateTime.Parse("1997-6-26"),
+                        DatePublished = DateTime.Parse("1998-9-1"),
                         Price = 250,
                         Author = "J.K. Rowling",
                         ImageUrl = "/images/hp1.jpg"
@@ -99,7 +99,7 @@ namespace BookStore.Models
                         Title = "Harry Potter and the Chamber of Secrets",
                         Language = "English",
                         ISBN = "9781338878936",
-                        DatePublished = DateTime.Parse("1997-6-26"),
+                        DatePublished = DateTime.Parse("2023-5-2"),
                         Price = 250,
                         Author = "J.K. Rowling",
                         ImageUrl = "/images/hp2.jpg"
