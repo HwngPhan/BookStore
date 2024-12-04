@@ -116,6 +116,17 @@ namespace BookStore.Models
                         Price = 181,
                         Author = "J. R. R. Tolkien",
                         ImageUrl = "https://salt.tikicdn.com/cache/750x750/ts/product/75/d8/8b/91c6c3e0e1e053575b0d1d18da4792de.jpg.webp"
+                    },
+
+                    new Book
+                    {
+                        Title = "Alice's Adventures In Wonderland",
+                        Language = "English",
+                        ISBN = "9781398804159",
+                        DatePublished = DateTime.Parse("2021-1-1"),
+                        Price = 143,
+                        Author = "Lewis Carroll",
+                        ImageUrl = "https://salt.tikicdn.com/cache/750x750/ts/product/7e/f5/1e/027d247bed982b02de79021df3805379.jpg.webp"
                     }
                 );
 
