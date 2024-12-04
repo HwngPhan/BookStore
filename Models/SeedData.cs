@@ -82,6 +82,17 @@ namespace BookStore.Models
                         Price = 95,
                         Author = "Cormac McCarthy",
                         ImageUrl = "/images/the-road.jpg"
+                    },
+                    
+                    new Book
+                    {
+                        Title = "Harry Potter and the Sorcerer's Stone",
+                        Language = "English",
+                        ISBN = "9781338878929",
+                        DatePublished = DateTime.Parse("1997-6-26"),
+                        Price = 250,
+                        Author = "J.K. Rowling",
+                        ImageUrl = "/images/hp1.jpg"
                     }
                 );
 
