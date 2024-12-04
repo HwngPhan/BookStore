@@ -103,6 +103,61 @@ namespace BookStore.Models
                         Price = 250,
                         Author = "J.K. Rowling",
                         ImageUrl = "/images/hp2.jpg"
+                    },
+                    
+                    new Book
+                    {
+                        Title = "Harry Potter and the Prisoner of Azkaban",
+                        Language = "English",
+                        ISBN = "9781338878943",
+                        DatePublished = DateTime.Parse("2001-10-1"),
+                        Price = 250,
+                        Author = "J.K. Rowling",
+                        ImageUrl = "/images/hp3.jpg"
+                    },
+                    
+                    new Book
+                    {
+                        Title = "Harry Potter and the Goblet of Fire",
+                        Language = "English",
+                        ISBN = "9781338878950",
+                        DatePublished = DateTime.Parse("2002-9-1"),
+                        Price = 250,
+                        Author = "J.K. Rowling",
+                        ImageUrl = "/images/hp4.jpg"
+                    }
+                    
+                    new Book
+                    {
+                        Title = "Harry Potter and the Order of the Phoenix",
+                        Language = "English",
+                        ISBN = "9781338878967",
+                        DatePublished = DateTime.Parse("2023-5-2"),
+                        Price = 250,
+                        Author = "J.K. Rowling",
+                        ImageUrl = "/images/hp5.jpg"
+                    },
+                    
+                    new Book
+                    {
+                        Title = "Harry Potter and the Half-Blood Prince",
+                        Language = "English",
+                        ISBN = "9781338878974",
+                        DatePublished = DateTime.Parse("2006-7-25"),
+                        Price = 250,
+                        Author = "J.K. Rowling",
+                        ImageUrl = "/images/hp6.jpg"
+                    },
+                    
+                    new Book
+                    {
+                        Title = "Harry Potter and the Deathly Hallows",
+                        Language = "English",
+                        ISBN = "9781338878981",
+                        DatePublished = DateTime.Parse("2023-5-2"),
+                        Price = 250,
+                        Author = "J.K. Rowling",
+                        ImageUrl = "/images/hp7.jpg"
                     }
                 );
 
