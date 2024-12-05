@@ -96,7 +96,7 @@ namespace BookStore.Models
 
                     new Book
                     {
-                        Title = "The Fellowship of the Ring",
+                        Title = "The Lord of the Rings: The Fellowship of the Ring",
                         Language = "English",
                         ISBN = "9780008376062",
                         DatePublished = DateTime.Parse("1954-7-29"),
@@ -107,7 +107,7 @@ namespace BookStore.Models
 
                     new Book
                     {
-                        Title = "The Two Towers",
+                        Title = "The Lord of the Rings: The Two Towers",
                         Language = "English",
                         ISBN = "9780008537784",
                         DatePublished = DateTime.Parse("1954-11-11"),
@@ -118,7 +118,7 @@ namespace BookStore.Models
 
                     new Book
                     {
-                        Title = "The Return of the King",
+                        Title = "The Lord of the Rings: The Return of the King",
                         Language = "English",
                         ISBN = "9780008537746",
                         DatePublished = DateTime.Parse("1955-10-20"),

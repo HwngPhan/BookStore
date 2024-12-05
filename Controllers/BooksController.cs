@@ -17,11 +17,12 @@ namespace BookStore.Controllers
     public class BooksController : Controller
     {
         private readonly BookStoreContext _context;
-        //private readonly Review _review;
+        private readonly Cart _cart;
 
-        public BooksController(BookStoreContext context)
+        public BooksController(BookStoreContext context, Cart cart)
         {
             _context = context;
+            _cart = cart;
             //_review = review;
         }
 
@@ -153,14 +154,13 @@ namespace BookStore.Controllers
             {
                 return NotFound();
             }
-
+            
             var book = await _context.Books
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (book == null)
             {
                 return NotFound();
-            }
-
+            }  
             return View(book);
         }
 
@@ -170,6 +170,7 @@ namespace BookStore.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var book = await _context.Books.FindAsync(id);
+            _cart.RemoveFromCart(book);
             _context.Books.Remove(book);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

@@ -114,17 +114,6 @@ namespace BookStore.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    //code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    //var callbackUrl = Url.Page(
-                    //    "/Account/ConfirmEmail",
-                    //    pageHandler: null,
-                    //    values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
-                    //    protocol: Request.Scheme);
-
-                    //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                    //    $"Please confirm your account i wrote this just to see that it works! by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
                         //return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
@@ -141,7 +130,6 @@ namespace BookStore.Areas.Identity.Pages.Account
                 }
             }
 
-            // If we got this far, something failed, redisplay form
             return Page();
         }
     }
