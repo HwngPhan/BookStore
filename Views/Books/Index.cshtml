@@ -21,7 +21,7 @@
 <p>
     <a asp-action="Create" class="btn btn-primary"><i class="fa-solid fa-book"></i> Add Book</a>
 </p>
-<table class="table">
+<table class="table" style="width:110%;">
     <thead>
         <tr>
             <th>
@@ -76,8 +76,8 @@
                 @if (User.IsInRole("Admin") || User.IsInRole("Author"))
                 {
 
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i></a>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i></a>
                     <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-success"><i class="fa-solid fa-circle-info"></i></a>
                     <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></a>
                 </td>
