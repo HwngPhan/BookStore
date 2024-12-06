@@ -10,7 +10,7 @@ namespace BookStore.Migrations
                 name: "CustomerId",
                 table: "Orders",
                 type: "nvarchar(max)",
-                nullable: true);
+                nullable: false);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
