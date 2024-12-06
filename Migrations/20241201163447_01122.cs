@@ -15,7 +15,7 @@ namespace BookStore.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Reviewer = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Reviewer = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Rating = table.Column<float>(type: "real", nullable: false),
                     Comments = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BookId = table.Column<int>(type: "int", nullable: false),

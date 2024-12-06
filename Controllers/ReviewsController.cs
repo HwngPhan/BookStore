@@ -132,10 +132,10 @@ namespace BookStore.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Store");
             }
             ViewData["BookId"] = new SelectList(_context.Books, "Id", "Author", review.BookId);
-            return View(review);
+            return RedirectToAction("Index", "Store");
         }
 
         // GET: Reviews/Delete/5
@@ -167,7 +167,7 @@ namespace BookStore.Controllers
             var review = await _context.Review.FindAsync(id);
             _context.Review.Remove(review);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Store");
         }
 
         private bool ReviewExists(int id)
